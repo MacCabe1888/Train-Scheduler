@@ -9,13 +9,12 @@ $("#submit").on("click", function(event) {
     let firstTime = $("#first-time").val().trim();
     let frequency = $("#frequency").val().trim();
 
-    let firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
+    let firstTimeConverted = moment(firstTime, "HH:mm").subtract(frequency, "minutes");
     let currentTime = moment();
-    let diffInTime = moment().diff(moment(firstTimeConverted), "minutes");
+    let diffInTime = moment(currentTime).diff(moment(firstTimeConverted), "minutes");
     let timeRemainder = diffInTime % frequency;
     let minutesAway = frequency - timeRemainder;
     let nextArrival = moment().add(minutesAway, "minutes").format("LT");
-
     let nextArrivalDisplay = $("<td>");
     let minutesAwayDisplay = $("<td>");
 
@@ -34,7 +33,7 @@ $("#submit").on("click", function(event) {
 
     function firstUpdate() {
         minutesAway--;
-        if (minutesAway === 0) {
+        if (!minutesAway > 0) {
             trainArrival.play();
             minutesAway = frequency;
             nextArrivalDisplay.text(moment().add(minutesAway, "minutes").format("LT"));
@@ -47,7 +46,7 @@ $("#submit").on("click", function(event) {
 
     function nextUpdate() {
         minutesAway--;
-        if (minutesAway === 0) {
+        if (!minutesAway > 0) {
             trainArrival.play();
             minutesAway = frequency;
             nextArrivalDisplay.text(moment().add(minutesAway, "minutes").format("LT"));
