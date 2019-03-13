@@ -1,3 +1,5 @@
+let trainArrival = new Audio("assets/audio/Electric-train-arriving-at-a-station-sound-effect.mp3");
+
 $("#submit").on("click", function(event) {
 
     event.preventDefault();
@@ -8,30 +10,51 @@ $("#submit").on("click", function(event) {
     let frequency = $("#frequency").val().trim();
 
     let firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
-
     let currentTime = moment();
-    console.log("Current time: " + moment(currentTime).format("LT"));
-
     let diffInTime = moment().diff(moment(firstTimeConverted), "minutes");
-    console.log("Difference in time: " + diffInTime);
-
     let timeRemainder = diffInTime % frequency;
-    console.log(timeRemainder);
-
     let minutesAway = frequency - timeRemainder;
-    console.log("Minutes away: " + minutesAway);
-
     let nextArrival = moment().add(minutesAway, "minutes").format("LT");
-    console.log("Arrival time: " + moment(nextArrival, "LT").format("hh:mm"));
+
+    let nextArrivalDisplay = $("<td>");
+    let minutesAwayDisplay = $("<td>");
 
     let newRow = $("<tr>").append(
         $("<td>").text(name),
         $("<td>").text(destination),
         $("<td>").text(frequency),
-        $("<td>").text(nextArrival),
-        $("<td>").text(minutesAway),
+        nextArrivalDisplay.text(nextArrival),
+        minutesAwayDisplay.text(minutesAway)
     );
 
     $("#train-schedule > tbody").append(newRow);
+
+    let secsTillFirstUpdate = 60 - currentTime.format("ss");
+    let firstUpdateTimer = setInterval(firstUpdate, 1000 * secsTillFirstUpdate);
+
+    function firstUpdate() {
+        minutesAway--;
+        if (minutesAway === 0) {
+            trainArrival.play();
+            minutesAway = frequency;
+            nextArrivalDisplay.text(moment().add(minutesAway, "minutes").format("LT"));
+        }
+        minutesAwayDisplay.text(minutesAway);
+        clearInterval(firstUpdateTimer);
+        setInterval(nextUpdate, 60000);
+        nextUpdate;
+    }
+
+    function nextUpdate() {
+        minutesAway--;
+        if (minutesAway === 0) {
+            trainArrival.play();
+            minutesAway = frequency;
+            nextArrivalDisplay.text(moment().add(minutesAway, "minutes").format("LT"));
+        }
+        minutesAwayDisplay.text(minutesAway);
+    }
+
+    firstUpdate;
  
 })
