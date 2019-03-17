@@ -1,13 +1,131 @@
 body{
     background: url(../images/tube-map-vector-seamless-pattern.jpg);
-    display: flex;
-    justify-content: center;
+    font-family: 'Mitr', sans-serif;
 }
 
 .jumbotron{
+    background: steelblue;
     text-align: center;
+    padding: 20px;
+    margin: 50px 0 50px 0;
+}
+
+.display-4{
+    font-family: 'Faster One', cursive;
+    font-size: 64px;
+}
+
+.lead{
+    font-size: 24px;
+    font-family: 'Baloo', cursive;
+    margin-top: 30px;
 }
 
 section{
-    margin-bottom: 30px;
+    margin-bottom: 50px;
+}
+
+.card{
+    border: 1px solid steelblue;
+}
+
+.card-header{
+    background: steelblue;
+    font-size: 20px;
+}
+
+.card-body{
+    background: lightsteelblue;
+}
+
+.table thead > tr > th{
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.form-control{
+    background: lightsteelblue;
+    border-color: black;
+}
+
+#submit{
+    color: inherit;
+    background: steelblue;
+    border: steelblue;
+}
+
+@media screen and (max-width: 1203px) {
+
+    .lead{
+        font-size: 20px;
+    }
+
+}
+
+@media screen and (max-width: 576px) {
+
+    .jumbotron{
+        margin: 15px 0 15px 0;
+    }
+
+    section{
+        margin-bottom: 15px;
+    }
+
+}
+
+@media screen and (max-width: 522px) {
+
+    .display-4{
+        font-size: 48px;
+    }
+
+    .lead{
+        font-size: 18px;
+    }
+
+    .table{
+        font-size: 12px;
+    }
+    
+}
+
+@media screen and (max-width: 441px) {
+
+    .table{
+        font-size: 10px;
+    }
+
+}
+
+@media screen and (max-width: 402px) {
+
+    .display-4{
+        font-size: 40px;
+    }
+
+    .lead{
+        font-size: 15px;
+    }
+
+    .table{
+        font-size: 8px;
+    }
+
+}
+
+@media screen and (max-width: 351px) {
+
+    .display-4{
+        font-size: 32px;
+    }
+
+    .lead{
+        font-size: 12px;
+    }
+
+    .table{
+        font-size: 6px;
+    }
+
 }
