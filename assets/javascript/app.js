@@ -11,6 +11,8 @@ firebase.initializeApp(config);
 
 let database = firebase.database();
 
+let trainKeys = [];
+
 let trainArrival = new Audio("assets/audio/Electric-train-arriving-at-a-station-sound-effect.mp3");
 
 $("#submit").on("click", function() {
@@ -21,6 +23,8 @@ $("#submit").on("click", function() {
     let destination = $("#destination").val().trim();
     let firstTime = $("#first-time").val().trim();
     let frequency = $("#frequency").val().trim();
+
+    $("#add-train").trigger("reset");
 
     //Create local temporary object for holding train data
 	let newTrain = {
@@ -36,6 +40,9 @@ $("#submit").on("click", function() {
 })
 
 database.ref().on("child_added", function(childSnapshot) {
+
+    trainKeys.push(childSnapshot.key);
+    console.log(trainKeys);
 
  	//Set variables for form input field values equal to the stored values in firebase.
     let name = childSnapshot.val().name;
@@ -66,7 +73,7 @@ database.ref().on("child_added", function(childSnapshot) {
     }
 
     let newRow = $("<tr>").append(
-        $("<td>").html('<button class="train-edit" id="' + childSnapshot.key + '">Edit</button>'),
+        $("<td>").html('<div class="buttons"><button class="train-edit" id="' + childSnapshot.key + '">Edit</button><button class="train-remove" id="' + childSnapshot.key + '">Delete</button></div>'),
         $("<td>").html('<div class="train-info train-name" edit_type="click">' + name + '</div>'),
         $("<td>").html('<div class="train-info train-destination" edit_type="click">' + destination + '</div>'),
         $("<td>").html('<div class="train-frequency">' + frequency + '</div>'),
@@ -83,7 +90,7 @@ database.ref().on("child_added", function(childSnapshot) {
         $(this).text("Save");
         $(this).attr("class", "train-save");
 
-        $(this).closest("tr").find(".train-info").css("background", "rgb(225, 240, 255)");
+        $(this).closest("tr").find(".train-info").css("background", "rgb(235, 245, 255)");
         $(this).closest("tr").find(".train-info").attr("contenteditable", "true");
         
     })
@@ -134,10 +141,33 @@ database.ref().on("child_added", function(childSnapshot) {
 
     })
 
+    $(document).on("click", ".train-remove", function(event) {
+
+        event.preventDefault();
+
+        if ($(this).attr("id") === childSnapshot.key) {
+            let confirmDelete = confirm("Are you sure you want to delete this train?");
+            if (confirmDelete === true) {
+                $(this).closest("tr").remove();
+                childSnapshot.ref.remove();
+                for (var i in trainKeys) {
+                    if (trainKeys[i] === childSnapshot.key) {
+                        trainKeys.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+        }
+
+    })
+
     let secsTillFirstUpdate = 60 - currentTime.format("ss");
     let firstUpdateTimer = setInterval(firstUpdate, 1000 * secsTillFirstUpdate);
 
     function firstUpdate() {
+        if (!trainKeys.includes(childSnapshot.key)) {
+            return;
+        }
         minutesAway = minutesAwayDisplay.text();
         minutesAway--;
         if (!minutesAway > 0) {
@@ -163,6 +193,9 @@ database.ref().on("child_added", function(childSnapshot) {
     }
 
     function nextUpdate() {
+        if (!trainKeys.includes(childSnapshot.key)) {
+            return;
+        }
         minutesAway = minutesAwayDisplay.text();
         minutesAway--;
         if (!minutesAway > 0) {

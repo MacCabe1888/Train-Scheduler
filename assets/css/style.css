@@ -43,13 +43,23 @@ section{
     border-bottom: 1px solid black;
 }
 
+.buttons{
+    display: flex;
+    flex-direction: column;
+}
+
+button{
+    padding: 0;
+    margin: 5px 0 5px 0;
+}
+
 .form-control{
     background: lightsteelblue;
     border-color: black;
 }
 
 .form-control:active, .form-control:focus{
-    background: rgb(225, 240, 255);
+    background: rgb(235, 245, 255);
 }
 
 #submit{
