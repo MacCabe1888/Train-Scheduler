@@ -48,16 +48,28 @@ section{
     border-color: black;
 }
 
+.form-control:active, .form-control:focus{
+    background: rgb(225, 240, 255);
+}
+
 #submit{
     color: inherit;
     background: steelblue;
     border: steelblue;
 }
 
-@media screen and (max-width: 1203px) {
+@media screen and (max-width: 1200px) {
 
     .lead{
         font-size: 20px;
+    }
+
+}
+
+@media screen and (max-width: 768px) {
+
+    .table{
+        font-size: 13px;
     }
 
 }
@@ -74,7 +86,7 @@ section{
 
 }
 
-@media screen and (max-width: 522px) {
+@media screen and (max-width: 535px) {
 
     .display-4{
         font-size: 48px;
@@ -90,7 +102,15 @@ section{
     
 }
 
-@media screen and (max-width: 441px) {
+@media screen and (max-width: 535px) {
+
+    .table{
+        font-size: 11px;
+    }
+
+}
+
+@media screen and (max-width: 491px) {
 
     .table{
         font-size: 10px;
@@ -98,7 +118,7 @@ section{
 
 }
 
-@media screen and (max-width: 402px) {
+@media screen and (max-width: 469px) {
 
     .display-4{
         font-size: 40px;
@@ -114,7 +134,7 @@ section{
 
 }
 
-@media screen and (max-width: 351px) {
+@media screen and (max-width: 419px) {
 
     .display-4{
         font-size: 32px;
@@ -126,6 +146,30 @@ section{
 
     .table{
         font-size: 6px;
+    }
+
+}
+
+@media screen and (max-width: 419px) {
+
+    .table{
+        font-size: 5px;
+    }
+
+}
+
+@media screen and (max-width: 353px) {
+
+    .table{
+        font-size: 4px;
+    }
+
+}
+
+@media screen and (max-width: 329px) {
+
+    .table{
+        font-size: 3px;
     }
 
 }
